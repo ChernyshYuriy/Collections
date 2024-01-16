@@ -1,0 +1,26 @@
+.login {
+  width: 400px;
+  margin: auto;
+  &__form {
+    margin-top: 100px;
+    &-btn {
+      margin: 10px auto 15px;
+      display: block;
+    }
+  }
+  &__change-button {
+    margin: auto;
+    display: block;
+  }
+  &__serve-validation {
+    text-align: center;
+    color: $red;
+    background-color: #ffe8e4;
+    padding: 5px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .login {
+    width: 300px;
+  }
+}
