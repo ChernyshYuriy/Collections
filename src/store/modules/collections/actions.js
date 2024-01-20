@@ -2,7 +2,7 @@ import axios from "axios";
 import api from "@/api/classes/collection";
 // import { useLoginStore } from "../login";
 // described user fields
-const defaultCollectionNames = ["Movies", "Games", "Books"];
+const defaultCollectionNames = ["Books", "Games", "Movies"];
 
 const defaultCollection = { main: [] };
 export default {
