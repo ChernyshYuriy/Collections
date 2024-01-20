@@ -6,6 +6,7 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4DBA87",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "./title192.png",
@@ -17,13 +18,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "splash_pages": null,
-  "related_applications": [],
-  "prefer_related_applications": false,
-  "scope": "/",
-  "orientation": "portrait-primary",
-  "display_override": null,
-  "crossorigin": "use-credentials",
-  "categories": []
+  ]
 }
