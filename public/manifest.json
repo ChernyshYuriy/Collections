@@ -1,19 +1,19 @@
 {
-  "name": "Vue PWA Example",
-  "short_name": "Vue PWA",
-  "description": "An example Vue.js Progressive Web App",
+  "name": "Collections system",
+  "short_name": "Collections",
+  "description": "Collections system to save interesting title and add revues for them",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4DBA87",
   "icons": [
     {
-      "src": "/img/icons/android-chrome-192x192.png",
+      "src": "./title192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/img/icons/android-chrome-512x512.png",
+      "src": "./title.png",
       "sizes": "512x512",
       "type": "image/png"
     }
