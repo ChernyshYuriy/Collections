@@ -1,6 +1,6 @@
 import api from "@/api/userAPI";
 import axios from "axios";
-
+import { useCollectionStore } from "../collections";
 // described user fields
 class User {
   constructor({ objectId, username, createdAt, updatedAt, sessionToken }) {
@@ -16,12 +16,14 @@ export default {
   // request create user and saving userId and sesssionToken for commit SET_NEW_USER
   async createAccount(params) {
     try {
+      const collectionStore = useCollectionStore();
       const resp = await axios.post(api.users, params);
       const respData = resp.data;
       respData.username = params.username;
       respData.updatedAt = respData.createdAt;
       const newUser = new User(respData);
       this.SET_NEW_USER(newUser);
+      await collectionStore.createDefaultCollections(newUser.objectId);
     } catch (error) {
       this.SET_VALIDATION_ERROR(error.response.data.error || "");
       console.error(error);

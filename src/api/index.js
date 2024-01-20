@@ -2,11 +2,11 @@
 export const headers = {
   serveAppId: {
     key: "X-Parse-Application-Id",
-    value: "RLCUMDHTHmsLDoNNxNweRG2I6QSyfCvQAidvUwP8",
+    value: "zdi1vjBfbLHR1m3XXGavIvykXoplaceW37uDjbYi",
   },
   restApiKey: {
     key: "X-Parse-REST-API-Key",
-    value: "urZP0EDeVIaQSQmRF7H26YP0jC0x3xz5a4Byg37n",
+    value: "o5b3kHqpaXjnPkS4Ehp8RVLhQY4cOAocrksMPZca",
   },
 };
 // basic url for server requests

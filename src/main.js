@@ -5,11 +5,15 @@ import router from "./router";
 import axios from "axios";
 import { headers, baseURL } from "./api";
 import { createPinia } from "pinia";
+import cookieKeys, { getCookie } from "./utils/cookie";
+
 const pinia = createPinia();
 const { serveAppId, restApiKey } = headers;
 axios.interceptors.request.use((config) => {
   config.headers[serveAppId.key] = serveAppId.value;
   config.headers[restApiKey.key] = restApiKey.value;
+  const sessionId = getCookie(cookieKeys.session);
+  if (sessionId) config.headers[cookieKeys.session] = sessionId;
   return config;
 });
 
