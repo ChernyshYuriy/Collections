@@ -12,6 +12,9 @@ const props = defineProps({
 <style lang="scss">
 .collection-item {
   padding: 10px;
+  &::first-letter {
+    text-transform: capitalize;
+  }
   &:nth-child(2n + 1) {
     background-color: #f3f3f3;
 

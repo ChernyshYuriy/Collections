@@ -13,4 +13,8 @@ export default {
   activeCollectionGroup: (state) =>
     state.collections.find((item) => item.objectId === state.activeCollectionId)
       ?.collection[state.activeGroup],
+  activeCollectionIndex: (state) =>
+    state.collections.findIndex(
+      (item) => item.objectId === state.activeCollectionId
+    ),
 };

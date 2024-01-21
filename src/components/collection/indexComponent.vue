@@ -2,8 +2,11 @@
 // import { ref } from "vue";
 
 import { useCollectionStore } from "@/store/modules/collections";
+import { useSearchStore } from "@/store/modules/search";
+
 import addElement from "@/components/collection/addElement.vue";
 import CollectionItem from "@/components/collection/collectionItem.vue";
+const searchStore = useSearchStore();
 
 const store = useCollectionStore();
 </script>
@@ -31,6 +34,17 @@ const store = useCollectionStore();
 
       <addElement />
     </div>
+    <template v-if="searchStore.searchResults?.length">
+      <div v-for="item in searchStore.searchResults" :key="item.id">
+        <h3>{{ item.originalTitleText.text }}</h3>
+        <img
+          v-if="item.primaryImage"
+          :src="item.primaryImage.url"
+          alt=""
+          width="200"
+        />
+      </div>
+    </template>
   </div>
 </template>
 <style lang="scss">
