@@ -10,7 +10,6 @@ export default {
     this.activeCollectionId = loadedCollections[0].objectId;
   },
   ADD_ELEMENT_TO_COLLECTION(collectionIndex, element, group = "main") {
-    console.log(collectionIndex, `collectionIndex`);
     this.collections[collectionIndex].collection[group].push(element);
   },
   REMOVE_ELEMENT_FROM_COLLECTION(collectionIndex, id, group = "main") {

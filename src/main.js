@@ -1,11 +1,11 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import "./registerServiceWorker";
 import router from "./router";
 import axios from "axios";
 import { headers, baseURL } from "./api";
 import { createPinia } from "pinia";
 import cookieKeys, { getCookie } from "./utils/cookie";
+import "./registerServiceWorker";
 
 const pinia = createPinia();
 const { serveAppId, restApiKey } = headers;
