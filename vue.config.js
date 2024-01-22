@@ -13,7 +13,7 @@ module.exports = {
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
     assetsVersion: "0.4.0",
-    manifestCrossorigin: "./public/manifest.json",
+    // manifestCrossorigin: "./public/manifest.json",
     // configure the workbox plugin
     // workboxPluginMode: "InjectManifest",
     workboxOptions: {
