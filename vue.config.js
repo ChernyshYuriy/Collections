@@ -15,7 +15,7 @@ module.exports = {
     assetsVersion: "0.4.0",
     manifestCrossorigin: "./public/manifest.json",
     // configure the workbox plugin
-    workboxPluginMode: "InjectManifest",
+    // workboxPluginMode: "InjectManifest",
     workboxOptions: {
       // swSrc is required in InjectManifest mode.
       swSrc: "dev/sw.js",
