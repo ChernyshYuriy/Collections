@@ -2,22 +2,17 @@ import axios from "axios";
 import api from "@/api/classes/collection";
 // import { useLoginStore } from "../login";
 // described user fields
-const defaultCollectionNames = ["Books", "Games", "Movies"];
+const defaultCollectionNames = ["Music", "Books", "Games", "Movies"];
 
 const defaultCollection = { main: [] };
 export default {
   // request create user and saving userId and sesssionToken for commit SET_NEW_USER
-  async createCollection(name, userId, newCollection) {
+  async createCollection(name, userId, newCollection = defaultCollection) {
     const resp = await axios.post(api.collection, {
       name,
       userId,
       collection: newCollection,
     });
-    // const resp = {
-    //   name,
-    //   userId,
-    //   collection: newCollection,
-    // };
     return resp;
   },
   createDefaultCollections(userId) {

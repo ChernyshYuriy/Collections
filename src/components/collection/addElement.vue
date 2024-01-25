@@ -37,8 +37,8 @@ const addElement = () => {
       title="Add element"
       :validation="validation"
     />
-    <btnUI color="green">Add element</btnUI>
-    <!-- <button @click="searchStore.searchFilmTitle('equilibrium')">213</button> -->
+    <btnUI type="submit" color="green">Add element</btnUI>
+    <!-- <button @click="searchStore.searchGamesTitle('wit')">213</button> -->
   </form>
 </template>
 

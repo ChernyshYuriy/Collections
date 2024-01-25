@@ -9,8 +9,6 @@ export const url = (keyword) =>
   `https://moviesdatabase.p.rapidapi.com/titles/search/title/${keyword}`;
 
 export default {
-  movies: {
-    options,
-    url,
-  },
+  options,
+  url,
 };

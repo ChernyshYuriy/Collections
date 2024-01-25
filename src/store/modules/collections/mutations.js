@@ -12,7 +12,11 @@ export default {
   ADD_ELEMENT_TO_COLLECTION(collectionIndex, element, group = "main") {
     this.collections[collectionIndex].collection[group].push(element);
   },
-  REMOVE_ELEMENT_FROM_COLLECTION(collectionIndex, id, group = "main") {
+  REMOVE_ELEMENT_FROM_COLLECTION(
+    collectionIndex = this.activeCollectionIndex,
+    id,
+    group = "main"
+  ) {
     const index = this.collections[collectionIndex].collection[group].findIndex(
       (element) => element.id === id
     );

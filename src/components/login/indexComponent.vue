@@ -95,7 +95,7 @@ onMounted(() => {
       <btnUI
         class="login__form-btn"
         color="green"
-        btnType="submit"
+        type="submit"
         :loading="loadingUser"
       >
         {{ textAction() }}

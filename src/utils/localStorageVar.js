@@ -29,7 +29,7 @@ export const getData = (key) => {
 };
 
 export const deleteData = (key) => {
-  delete localStorage.removeItem(localStorageKeys[key]);
+  localStorage.removeItem(localStorageKeys[key]);
 };
 
 // default  localStorage actions

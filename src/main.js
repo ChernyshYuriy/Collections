@@ -12,6 +12,7 @@ const { serveAppId, restApiKey } = headers;
 axios.interceptors.request.use((config) => {
   config.headers[serveAppId.key] = serveAppId.value;
   config.headers[restApiKey.key] = restApiKey.value;
+  // config.headers["Access-Control-Allow-Origin"] = "*"; // Set the CORS header
   const sessionId = getCookie(cookieKeys.session);
   if (sessionId) config.headers[cookieKeys.session] = sessionId;
   return config;

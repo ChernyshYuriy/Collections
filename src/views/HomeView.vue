@@ -1,6 +1,17 @@
 <template>
   <div class="home">
-    <BtnUI v-if="isUserLogin" @click="logout" color="red">Logout</BtnUI>
+    <div class="home__actions">
+      <BtnUI v-if="isUserLogin" @click="addCollection()" color="blue"
+        >Add new collection</BtnUI
+      >
+      <BtnUI v-if="isUserLogin" @click="storeLogin.logout()" color="red"
+        >Logout</BtnUI
+      >
+    </div>
+    <AddNewCollection
+      v-if="showAddCollectionModal"
+      @hideAddCollection="hideAddCollection()"
+    />
     <Collections />
   </div>
 </template>
@@ -10,17 +21,24 @@ import { useRouter } from "vue-router";
 import { getData } from "@/utils/localStorageVar";
 import { useLoginStore } from "@/store/modules/login";
 import { useCollectionStore } from "@/store/modules/collections";
-import { computed, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import BtnUI from "@/components/ui/btnUI.vue";
 import Collections from "@/components/collection/indexComponent.vue";
+import AddNewCollection from "@/components/collection/addNewCollection.vue";
 
 const storeLogin = useLoginStore();
 const storeCollection = useCollectionStore();
 const router = useRouter();
 const isUserLogin = computed(() => storeLogin.isUserLogin);
-const logout = () => {
-  storeLogin.logout();
-};
+const showAddCollectionModal = ref(false);
+
+function addCollection() {
+  console.log(1);
+  showAddCollectionModal.value = true;
+}
+function hideAddCollection() {
+  showAddCollectionModal.value = false;
+}
 async function autoLogin() {
   const userId = getData("userId");
   if (userId && !isUserLogin.value) await storeLogin.getCurrentUser(userId);
@@ -32,8 +50,13 @@ async function autoLogin() {
 onMounted(async () => {
   autoLogin();
   await storeCollection.getAllCollections(storeLogin.user.objectId);
-  // await storeCollection.createCollection("dsadasd", {
-  //   main: [213123, 3214214, 4124],
-  // });
 });
 </script>
+<style lang="scss" scoped>
+.home {
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+</style>

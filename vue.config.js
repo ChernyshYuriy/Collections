@@ -12,7 +12,7 @@ module.exports = {
     msTileColor: "#000000",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
-    assetsVersion: "0.4.0",
+    assetsVersion: "0.5.0",
     manifestCrossorigin: "./public/manifest.json",
     // configure the workbox plugin
     // workboxPluginMode: "InjectManifest",

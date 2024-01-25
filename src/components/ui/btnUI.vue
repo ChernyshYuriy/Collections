@@ -7,7 +7,13 @@ const props = defineProps({
       return "";
     },
   },
-  btnType: {
+  type: {
+    type: String,
+    default() {
+      return "button";
+    },
+  },
+  size: {
     type: String,
     default() {
       return "button";
@@ -19,14 +25,27 @@ const props = defineProps({
       return false;
     },
   },
+  disabled: {
+    type: Boolean,
+    default() {
+      return false;
+    },
+  },
 });
-const classStyle = computed(() => ` ${classColor.value} ${classLoading.value}`);
-const classColor = computed(() => `btn--${props.color}`);
+const classStyle = computed(
+  () =>
+    `btn ${classColor.value} ${classLoading.value} ${classDisabled.value} ${classSize.value}`
+);
+const classDisabled = computed(() =>
+  props.loading || props.disabled ? "btn--disabled" : ""
+);
+const classColor = computed(() => (props.color ? `btn--${props.color}` : ""));
+const classSize = computed(() => (props.size ? `btn--${props.size}` : ""));
 const classLoading = computed(() => (props.loading ? "btn--loading" : ""));
 </script>
 
 <template>
-  <button :disabled="loading" type="btnType" :class="`btn ${classStyle}`">
+  <button :disabled="loading || disabled" :type="type" :class="classStyle">
     <slot></slot>
     <img
       v-if="loading"
@@ -54,9 +73,16 @@ const classLoading = computed(() => (props.loading ? "btn--loading" : ""));
     right: 5px;
     position: absolute;
   }
+  // styles for sizes
+  &--small {
+    height: 20px;
+    padding: 0px 2px;
+  }
   &--loading {
     padding-right: 40px;
-    filter: grayscale(50%);
+  }
+  &--disabled {
+    filter: grayscale(70%);
   }
   &--green {
     background-color: $green;
