@@ -33,7 +33,6 @@ const isUserLogin = computed(() => storeLogin.isUserLogin);
 const showAddCollectionModal = ref(false);
 
 function addCollection() {
-  console.log(1);
   showAddCollectionModal.value = true;
 }
 function hideAddCollection() {
@@ -48,7 +47,7 @@ async function autoLogin() {
 }
 
 onMounted(async () => {
-  autoLogin();
+  await autoLogin();
   await storeCollection.getAllCollections(storeLogin.user.objectId);
 });
 </script>

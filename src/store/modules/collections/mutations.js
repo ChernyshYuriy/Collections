@@ -1,6 +1,4 @@
-// import localStorageKeys, { setData, deleteData } from "@/utils/localStorageVar";
-// import router from "@/router";
-// import cookieKeys, { deleteCookie, setCookie } from "@/utils/cookie";
+import { saveDeletedCollection } from "@/utils/collections";
 
 export default {
   SET_ALL_COLLECTIONS(collection) {
@@ -21,6 +19,13 @@ export default {
       (element) => element.id === id
     );
     this.collections[collectionIndex].collection[group].splice(index, 1);
+  },
+  REMOVE_COLLECTION(collectionId) {
+    const index = this.collections.findIndex(
+      (element) => element.objectId === collectionId
+    );
+    saveDeletedCollection(this.collections[index]);
+    this.collections.splice(index, 1);
   },
   CHANGE_ACTIVE_COLLECTION(newCollectionId) {
     this.activeCollectionId = newCollectionId;

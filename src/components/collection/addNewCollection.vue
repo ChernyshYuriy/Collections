@@ -22,7 +22,11 @@ const newCollectionName = ref("");
   <ModalUI @close="emit('hideAddCollection')">
     <template #header>Create new Collection</template>
     <template #body>
-      <inputUI v-model="newCollectionName" title="New collection name" />
+      <inputUI
+        id="newCollection"
+        v-model="newCollectionName"
+        title="New collection name"
+      />
       <BtnUI
         :disabled="!newCollectionName.length"
         @click="createCollection()"

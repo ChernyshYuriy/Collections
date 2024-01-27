@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 
-import UiInput from "../ui/inputUI.vue";
+import inputUI from "../ui/inputUI.vue";
 import btnUI from "../ui/btnUI.vue";
 import { useLoginStore } from "@/store/modules/login";
 import { validEmail, isEmpty, validPassword } from "@/utils/validationInput";
@@ -65,14 +65,14 @@ onMounted(() => {
 <template>
   <div class="login">
     <form class="login__form" @submit.prevent="submitAction">
-      <UiInput
+      <inputUI
         v-model="userName"
         id="userName"
         title="User name"
         :validation="userNameValidation"
         :showValidation="store.showValidation"
       />
-      <UiInput
+      <inputUI
         v-show="!isLogin"
         v-model="email"
         id="email"
@@ -80,7 +80,7 @@ onMounted(() => {
         :validation="emailValidation"
         :showValidation="store.showValidation"
       />
-      <UiInput
+      <inputUI
         v-model="password"
         id="password"
         title="Password"

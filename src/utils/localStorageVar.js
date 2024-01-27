@@ -1,6 +1,7 @@
 const localStorageKeys = {
   session: "session",
   userId: "userId",
+  deletedCollections: "deletedCollections",
 };
 export default localStorageKeys;
 
@@ -34,10 +35,10 @@ export const deleteData = (key) => {
 
 // default  localStorage actions
 export const setItemLocalStorage = (key, data) => {
-  localStorage.setItem(key, data);
+  localStorage.setItem(key, JSON.stringify(data));
 };
 export const getItemLocalStorage = (key) => {
-  localStorage.getItem(key);
+  return JSON.parse(localStorage.getItem(key));
 };
 export const removeItemLocalStorage = (key) => {
   localStorage.removeItem(key);

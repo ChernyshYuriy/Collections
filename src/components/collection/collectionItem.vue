@@ -9,6 +9,10 @@ const props = defineProps({
   item: {
     type: Object,
   },
+  isFullCollection: {
+    type: Boolean,
+    default: false,
+  },
 });
 function deleteItem() {
   collectionsStore.REMOVE_ELEMENT_FROM_COLLECTION(
@@ -16,6 +20,9 @@ function deleteItem() {
     props.item.id
   );
   collectionsStore.saveChangesToCollection(collectionsStore.activeCollectionId);
+}
+function deleteCollection() {
+  collectionsStore.REMOVE_COLLECTION(props.item.objectId);
 }
 
 function showConfirmModal(status) {
@@ -29,17 +36,27 @@ const isShowConfirmModal = ref(false);
     <btnUI size="small" @click="showConfirmModal(true)"
       ><img class="svg" :src="trashSvg" alt=""
     /></btnUI>
-    <ConfirmModal
-      v-if="isShowConfirmModal"
-      :confirm-func="deleteItem"
-      @hideModal="showConfirmModal(false)"
-    />
+    <template v-if="isShowConfirmModal">
+      <ConfirmModal
+        v-if="!props.isFullCollection"
+        :confirm-func="deleteItem"
+        @hideModal="showConfirmModal(false)"
+      />
+      <ConfirmModal
+        v-else
+        :confirm-func="deleteCollection"
+        @hideModal="showConfirmModal(false)"
+        :confirmWithInput="true"
+        :requiredInputToConfirm="props.item.name"
+      />
+    </template>
   </div>
 </template>
 <style lang="scss">
 .collection-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px;
 
   button img {
@@ -47,6 +64,7 @@ const isShowConfirmModal = ref(false);
   }
 
   & .title {
+    padding-right: 10px;
     &::first-letter {
       text-transform: capitalize;
     }

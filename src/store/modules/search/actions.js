@@ -11,12 +11,6 @@ export default {
     }
   },
   async searchGamesTitle(keyword) {
-    console.log(keyword, `keyword`);
-    console.log(
-      apiGames.url(keyword),
-      apiGames.options,
-      `apiGames.url(keyword)`
-    );
     try {
       const response = await fetch(apiGames.url(keyword), apiGames.options);
       const data = await response.json();
@@ -24,11 +18,5 @@ export default {
     } catch (error) {
       console.error(error);
     }
-    // try {
-    //   const response = await axios.request(options);
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
   },
 };
