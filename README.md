@@ -1,5 +1,4 @@
-# base vue 3 composition API project with login (reqiusts axios) and costume components input and buttons
-
+# base vue 3 composition API project with login (reqiusts axios) and costume components IU
 ## Project setup
 ```
 npm install
