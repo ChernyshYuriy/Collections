@@ -48,5 +48,6 @@ const addElement = () => {
   flex-direction: column;
   width: 260px;
   margin: 10px auto 0px;
+  padding: 0px 10px 20px;
 }
 </style>

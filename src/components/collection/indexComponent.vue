@@ -6,6 +6,8 @@ import { useSearchStore } from "@/store/modules/search";
 import addElement from "@/components/collection/addElement.vue";
 import CollectionItem from "@/components/collection/collectionItem.vue";
 import ControlElement from "./controleElement.vue";
+import dropElement from "../ui/dropElement.vue";
+import btnUI from "../ui/btnUI.vue";
 
 const costumeNavigation = reactive({
   name: "Control",
@@ -17,6 +19,7 @@ const navItemCollectionRef = ref(null);
 const navItemControlRef = ref(null);
 const sumNavigationWidth = ref(0);
 const screenWidth = ref(window.innerWidth);
+const showAddElement = ref(false);
 watch(
   () => navItemCollectionRef.value,
   (newCollection) => {
@@ -68,8 +71,19 @@ watch(
         :key="item.id"
       />
     </template>
-
-    <addElement v-if="store.activeCollectionId !== costumeNavigation.id" />
+    <div
+      v-if="store.activeCollectionId !== costumeNavigation.id"
+      class="collection__add-element"
+    >
+      <dropElement :is-open-status="showAddElement"
+        ><template #main
+          ><btnUI color="green" @click="showAddElement = !showAddElement"
+            >Add
+          </btnUI></template
+        >
+        <template #content> <addElement /> </template
+      ></dropElement>
+    </div>
     <template v-else> <ControlElement /> </template>
 
     <template v-if="searchStore.searchResults?.length">
@@ -93,6 +107,17 @@ watch(
     background-color: $green;
     margin-bottom: 10px;
     justify-content: center;
+  }
+  &__add-element {
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background-color: $white;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
   }
 }
 .nav {
