@@ -13,7 +13,8 @@ async function createCollection() {
     newCollectionName.value,
     storeUser.user.objectId
   );
-  storeCollection.getAllCollections();
+  await storeCollection.getAllCollections(storeUser.user.objectId);
+  emit("hideAddCollection");
 }
 const newCollectionName = ref("");
 </script>

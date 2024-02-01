@@ -22,7 +22,7 @@ function deleteItem() {
   collectionsStore.saveChangesToCollection(collectionsStore.activeCollectionId);
 }
 function deleteCollection() {
-  collectionsStore.REMOVE_COLLECTION(props.item.objectId);
+  collectionsStore.deleteCollection(props.item.objectId);
 }
 
 function showConfirmModal(status) {

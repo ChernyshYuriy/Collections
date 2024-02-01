@@ -33,6 +33,15 @@ export default {
       console.error(error);
     }
   },
+  async deleteCollection(collectionId) {
+    try {
+      const resp = await axios.delete(api.collectionElement(collectionId));
+      console.log(resp, `resp`);
+      this.REMOVE_COLLECTION(collectionId);
+    } catch (error) {
+      console.error(error);
+    }
+  },
   async saveChangesToCollection(collectionId) {
     try {
       const resp = await axios.put(api.collectionElement(collectionId), {
