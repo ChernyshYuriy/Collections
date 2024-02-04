@@ -17,4 +17,7 @@ export default {
     state.collections.findIndex(
       (item) => item.objectId === state.activeCollectionId
     ),
+  activeCollectionTitle: (state) =>
+    state.collections.find((item) => item.objectId === state.activeCollectionId)
+      ?.name || "",
 };

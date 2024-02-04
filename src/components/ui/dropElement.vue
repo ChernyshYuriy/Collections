@@ -38,6 +38,7 @@ const mainH = computed(() => main.value?.offsetHeight + "px");
     display: grid;
     transition: grid-template-rows 0.3s ease-in-out;
     grid-template-rows: 0fr;
+    background-color: $white;
     &--open {
       grid-template-rows: 1fr;
     }

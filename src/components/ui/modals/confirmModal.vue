@@ -16,6 +16,7 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  description: { type: String },
 });
 const inputValue = ref("");
 const inputTitle = `Enter "${props.requiredInputToConfirm}" to continue`;
@@ -34,6 +35,9 @@ function hideModal() {
   <modalUI @close="hideModal()">
     <template #header> Are you sure? </template>
     <template #body>
+      <div v-if="props.description" class="modal-description">
+        {{ props.description }}
+      </div>
       <inputUI
         v-if="confirmWithInput"
         id="confirmInput"
@@ -53,6 +57,10 @@ function hideModal() {
   </modalUI>
 </template>
 <style lang="scss" scoped>
+.modal-description {
+  text-align: center;
+  margin-bottom: 10px;
+}
 .btn-group {
   display: flex;
   justify-content: space-evenly;

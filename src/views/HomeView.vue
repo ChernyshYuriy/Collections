@@ -12,7 +12,7 @@
       v-if="showAddCollectionModal"
       @hideAddCollection="hideAddCollection()"
     />
-    <Collections />
+    <Collections v-if="storeCollection.activeCollectionId" />
   </div>
 </template>
 

@@ -1,3 +1,6 @@
+<script setup></script>
+<script setup></script>
+<script setup></script>
 <script setup>
 import { defineProps, ref } from "vue";
 import btnUI from "../ui/btnUI.vue";
@@ -5,6 +8,10 @@ import trashSvg from "@/assets/svg/trash-red.svg";
 import { useCollectionStore } from "@/store/modules/collections";
 import ConfirmModal from "../ui/modals/confirmModal.vue";
 import dropElement from "../ui/dropElement.vue";
+import RatingUI from "../ui/ratingUI.vue";
+
+import { createNewCollectionItem } from "@/utils/collections";
+import InputUI from "../ui/inputUI.vue";
 
 const collectionsStore = useCollectionStore();
 const props = defineProps({
@@ -16,6 +23,8 @@ const props = defineProps({
     default: false,
   },
 });
+const rating = ref(props.item.rating || 0);
+const name = ref(props.item.name);
 function deleteItem() {
   collectionsStore.REMOVE_ELEMENT_FROM_COLLECTION(
     collectionsStore.activeCollectionIndex,
@@ -30,15 +39,29 @@ function deleteCollection() {
 function showConfirmModal(status) {
   isShowConfirmModal.value = status;
 }
+function saveItemChanges() {
+  const newItem = createNewCollectionItem(name, rating.value, props.item.id);
+  collectionsStore.CHANGE_COLLECTION_ELEMENT(
+    collectionsStore.activeCollectionIndex,
+    newItem
+  );
+  collectionsStore.SORT_COLLECTION(collectionsStore.activeCollectionIndex);
+  collectionsStore.saveChangesToCollection(collectionsStore.activeCollectionId);
+  showDropContent.value = false;
+}
 const isShowConfirmModal = ref(false);
+const confirmModalDescription = `Delete "${props.item.name}"`;
 const showDropContent = ref(false);
 </script>
 <template>
-  <dropElement :is-open-status="showDropContent">
+  <dropElement class="drop-element" :is-open-status="showDropContent">
     <template #main>
-      <div class="collection-item">
+      <div class="collection-item-main">
         <div class="title">{{ props.item.name }}</div>
-        <span class="collection-item__actions">
+        <span class="collection-item-main__rating">
+          {{ props.item.rating }}
+        </span>
+        <span class="collection-item-main__actions">
           <btnUI
             size="small"
             color="blue"
@@ -54,6 +77,7 @@ const showDropContent = ref(false);
           <ConfirmModal
             v-if="!props.isFullCollection"
             :confirm-func="deleteItem"
+            :description="confirmModalDescription"
             @hideModal="showConfirmModal(false)"
           />
           <ConfirmModal
@@ -66,33 +90,68 @@ const showDropContent = ref(false);
         </template>
       </div>
     </template>
-    <template #content>Edit panel </template>
+    <template #content>
+      <form @submit.prevent="saveItemChanges()" class="collection-edit-item">
+        <div class="collection-edit-item__panel panel">
+          <InputUI v-model="name" id="item-name" title="Edit name" />
+          <RatingUI class="collection-edit-item__rating" v-model="rating" />
+        </div>
+        <btnUI class="collection-edit-item__btn" color="green" type="submit"
+          >Save changes
+        </btnUI>
+      </form>
+    </template>
   </dropElement>
 </template>
 <style lang="scss">
-.collection-item {
+.drop-element:nth-child(2n + 1) .collection-item-main {
+  background-color: $grayLight;
+}
+
+.collection-item-main {
   display: grid;
   justify-content: space-between;
   align-items: center;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 34px auto;
+  gap: 5px;
   padding: 10px;
   &__actions {
     display: flex;
     gap: 10px;
+  }
+  &__rating {
+    text-align: center;
+    height: 100%;
   }
   button img {
     width: 12px;
   }
 
   & .title {
-    padding-right: 10px;
     &::first-letter {
       text-transform: capitalize;
     }
   }
+}
+.collection-edit-item {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 8px;
+  &__panel {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .panel {
+    &__rating {
+    }
+  }
 
-  &:nth-child(2n + 1) {
-    background-color: #f3f3f3;
+  &__btn {
+    margin: 0px auto;
+    width: 130px;
   }
 }
 </style>
