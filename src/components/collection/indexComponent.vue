@@ -1,78 +1,56 @@
 <script setup>
-import { reactive, ref, watch } from "vue";
+import { ref } from "vue";
 import { useCollectionStore } from "@/store/modules/collections";
-import { useSearchStore } from "@/store/modules/search";
+// import { useSearchStore } from "@/store/modules/search";
+import { navControlId } from "@/static/nav";
 
 import addElement from "@/components/collection/addElement.vue";
 import CollectionItem from "@/components/collection/collectionItem.vue";
 import ControlElement from "./controleElement.vue";
+import dropElement from "../ui/dropElement.vue";
+import btnUI from "../ui/btnUI.vue";
+import collectionsNav from "./collectionsNav.vue";
 
-const costumeNavigation = reactive({
-  name: "Control",
-  id: "deleted-navigation",
-});
-const searchStore = useSearchStore();
+// const searchStore = useSearchStore();
 const store = useCollectionStore();
-const navItemCollectionRef = ref(null);
-const navItemControlRef = ref(null);
-const sumNavigationWidth = ref(0);
-const screenWidth = ref(window.innerWidth);
-watch(
-  () => navItemCollectionRef.value,
-  (newCollection) => {
-    if (!newCollection || newCollection.length === 0) return;
 
-    sumNavigationWidth.value = newCollection.reduce(
-      (accumulatorWidth, elementDOM) =>
-        elementDOM.offsetWidth + accumulatorWidth,
-      0
-    );
-    sumNavigationWidth.value += navItemControlRef.value.offsetWidth;
-  }
-);
+const showAddElement = ref(false);
 </script>
 <template>
   <div class="collection">
-    <div
-      class="collection__navigation nav"
-      :class="{ 'nav--scroll': sumNavigationWidth > screenWidth }"
-    >
-      <div
-        class="nav__item"
-        :class="{
-          'nav__item--active': item.objectId === store.activeCollectionId,
-        }"
-        ref="navItemCollectionRef"
-        v-for="item in store.collectionsList"
-        :key="item.objectId"
-        @click="store.CHANGE_ACTIVE_COLLECTION(item.objectId)"
-      >
-        {{ item.name }}
-      </div>
-      <div
-        class="nav__item"
-        :class="{
-          'nav__item--active':
-            costumeNavigation.id === store.activeCollectionId,
-        }"
-        ref="navItemControlRef"
-        @click="store.CHANGE_ACTIVE_COLLECTION(costumeNavigation.id)"
-      >
-        {{ costumeNavigation.name }}
-      </div>
-    </div>
-    <template v-if="store.activeCollectionGroup">
+    <collectionsNav
+      v-if="store.collectionsList.length"
+      class="collection__navigation"
+      :collectionsList="store.collectionsList"
+      :activeCollectionId="store.activeCollectionId"
+      @changeCollection="store.CHANGE_ACTIVE_COLLECTION($event)"
+    />
+    <div class="collection__items" v-if="store.activeCollectionGroup">
       <CollectionItem
         :item="item"
         v-for="item in store.activeCollectionGroup"
         :key="item.id"
       />
-    </template>
-
-    <addElement v-if="store.activeCollectionId !== costumeNavigation.id" />
+    </div>
+    <div
+      v-if="store.activeCollectionId !== navControlId"
+      class="collection__add-element"
+    >
+      <dropElement :is-open-status="showAddElement"
+        ><template #main
+          ><btnUI
+            class="elem-center"
+            color="green"
+            @click="showAddElement = !showAddElement"
+            >{{ showAddElement ? "Hide" : "Show" }} add element modal
+          </btnUI></template
+        >
+        <template #content> <addElement /> </template
+      ></dropElement>
+    </div>
     <template v-else> <ControlElement /> </template>
 
-    <template v-if="searchStore.searchResults?.length">
+    <!-- <template v-if="searchStore.searchResults?.length">
       <div v-for="item in searchStore.searchResults" :key="item.id">
         <h3>{{ item.originalTitleText.text }}</h3>
         <img
@@ -82,7 +60,7 @@ watch(
           width="200"
         />
       </div>
-    </template>
+    </template> -->
   </div>
 </template>
 <style lang="scss">
@@ -94,24 +72,20 @@ watch(
     margin-bottom: 10px;
     justify-content: center;
   }
-}
-.nav {
-  &--scroll {
-    overflow: scroll;
-    justify-content: flex-start;
+  &__items {
+    margin-bottom: 62px;
   }
-  &__item {
-    background-color: $green;
-    padding: 12px 20px 16px;
-    color: $white;
-    outline: 1px solid $white;
-    cursor: pointer;
-    &--active {
-      background-color: $white;
-      color: $black;
-      border: 1px solid $green;
-      outline: none;
-    }
+  &__add-element {
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background-color: $whiteTransparent;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
   }
 }
 </style>

@@ -14,6 +14,7 @@
 @media screen and (max-width: 1440px) {
   .container {
     width: 1200px;
+    margin: 12px auto 12px;
   }
 }
 @media screen and (max-width: 1440px) {

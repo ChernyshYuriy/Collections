@@ -1,14 +1,31 @@
-import { saveDeletedCollection } from "@/utils/collections";
+import {
+  saveDeletedCollection,
+  sortActiveCollection,
+  sortAllCollections,
+} from "@/utils/collections";
 
 export default {
   SET_ALL_COLLECTIONS(collection) {
     const loadedCollections = collection.data.results;
-    this.collections = loadedCollections;
     if (!loadedCollections?.length) return;
+    this.collections = sortAllCollections(loadedCollections);
     this.activeCollectionId = loadedCollections[0].objectId;
   },
   ADD_ELEMENT_TO_COLLECTION(collectionIndex, element, group = "main") {
     this.collections[collectionIndex].collection[group].push(element);
+    this.SORT_COLLECTION(collectionIndex, group);
+  },
+  SORT_COLLECTION(collectionIndex, group = "main") {
+    const collection = this.collections[collectionIndex].collection;
+    collection[group] = sortActiveCollection(collection);
+  },
+  CHANGE_COLLECTION_ELEMENT(collectionIndex, newItem, group = "main") {
+    const index = this.collections[collectionIndex].collection[group].findIndex(
+      (element) => {
+        return element.id === newItem.id;
+      }
+    );
+    this.collections[collectionIndex].collection[group][index] = newItem;
   },
   REMOVE_ELEMENT_FROM_COLLECTION(
     collectionIndex = this.activeCollectionIndex,
