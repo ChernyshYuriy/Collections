@@ -27,6 +27,18 @@ export function saveDeletedCollection(newDeletedCollection) {
   ]);
 }
 
+export function searchSimilarInCollection(
+  collection,
+  inputText,
+  keyValue = "name"
+) {
+  return collection
+    .filter((item) =>
+      item[keyValue].toLowerCase().includes(inputText.toLowerCase())
+    )
+    .map((item) => item[keyValue]);
+}
+
 export function sortAllCollections(collections) {
   return collections.map((element) => ({
     ...element,

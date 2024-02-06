@@ -4,8 +4,12 @@ import btnUI from "../ui/btnUI.vue";
 import inputUI from "../ui/inputUI.vue";
 import { useCollectionStore } from "@/store/modules/collections";
 // import { useSearchStore } from "@/store/modules/search";
-import { createNewCollectionItem } from "@/utils/collections";
+import {
+  createNewCollectionItem,
+  searchSimilarInCollection,
+} from "@/utils/collections";
 import RatingUI from "../ui/ratingUI.vue";
+import { createDebounce } from "@/utils/global";
 
 const validationMessage = {
   alreadyCreated: "this item already created",
@@ -30,6 +34,19 @@ const addElement = () => {
   name.value = "";
   rating.value = 0;
 };
+const similarItems = ref([]);
+const debounce = createDebounce(300);
+function searchSimilarItems(e) {
+  const value = e.target.value;
+  if (value?.length <= 2) {
+    similarItems.value = [];
+  } else {
+    similarItems.value = searchSimilarInCollection(
+      store.activeCollectionGroup,
+      value
+    );
+  }
+}
 </script>
 
 <template>
@@ -39,7 +56,14 @@ const addElement = () => {
       id="item"
       :title="`${store.activeCollectionTitle} new element name`"
       :validation="validation"
+      @input="debounce(() => searchSimilarItems($event))"
     />
+    <div class="form__similar similar" v-if="similarItems.length">
+      <span>Similar in collection</span>
+      <span class="similar__item" v-for="item in similarItems" :key="item">{{
+        item
+      }}</span>
+    </div>
     <RatingUI class="form__rating" v-model="rating" />
     <btnUI type="submit" color="green"
       >Add {{ store.activeCollectionTitle }}</btnUI
@@ -57,6 +81,21 @@ const addElement = () => {
   padding: 0px 10px 20px;
   &__rating {
     margin-bottom: 20px;
+  }
+  &__similar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+    & .similar__item {
+      outline: 1px solid #000301;
+      border-radius: 5px;
+      padding: 2px;
+      &::first-letter {
+        text-transform: capitalize;
+      }
+    }
   }
 }
 </style>
