@@ -15,7 +15,7 @@ const props = defineProps({
   item: {
     type: Object,
   },
-  isFullCollection: {
+  isControlPanel: {
     type: Boolean,
     default: false,
   },
@@ -46,6 +46,16 @@ function saveItemChanges() {
   collectionsStore.saveChangesToCollection(collectionsStore.activeCollectionId);
   showDropContent.value = false;
 }
+function saveCollectionChanges() {
+  collectionsStore.CHANGE_COLLECTION_NAME(props.item.objectId, name.value);
+  collectionsStore.saveChangesToCollection(props.item.objectId, {
+    name: name.value,
+  });
+}
+function editSubmitAction(params) {
+  console.log(props.isControlPanel, `controle`);
+  props.isControlPanel ? saveCollectionChanges() : saveItemChanges();
+}
 const isShowConfirmModal = ref(false);
 const confirmModalDescription = `Delete "${props.item.name}"`;
 const showDropContent = ref(false);
@@ -63,7 +73,7 @@ const showDropContent = ref(false);
             size="small"
             color="blue"
             @click="showDropContent = !showDropContent"
-            >edit</btnUI
+            >{{ showDropContent ? "hide" : "edit" }}</btnUI
           >
           <btnUI size="small" @click="showConfirmModal(true)"
             ><img class="svg" :src="trashSvg" alt=""
@@ -72,7 +82,7 @@ const showDropContent = ref(false);
 
         <template v-if="isShowConfirmModal">
           <ConfirmModal
-            v-if="!props.isFullCollection"
+            v-if="!props.isControlPanel"
             :confirm-func="deleteItem"
             :description="confirmModalDescription"
             @hideModal="showConfirmModal(false)"
@@ -88,10 +98,14 @@ const showDropContent = ref(false);
       </div>
     </template>
     <template #content>
-      <form @submit.prevent="saveItemChanges()" class="collection-edit-item">
+      <form @submit.prevent="editSubmitAction()" class="collection-edit-item">
         <div class="collection-edit-item__panel panel">
           <InputUI v-model="name" id="item-name" title="Edit name" />
-          <RatingUI class="collection-edit-item__rating" v-model="rating" />
+          <RatingUI
+            v-if="!props.isControlPanel"
+            class="collection-edit-item__rating"
+            v-model="rating"
+          />
         </div>
         <btnUI class="collection-edit-item__btn" color="green" type="submit"
           >Save changes

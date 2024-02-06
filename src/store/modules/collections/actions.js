@@ -42,11 +42,17 @@ export default {
       console.error(error);
     }
   },
-  async saveChangesToCollection(collectionId) {
+  async saveChangesToCollection(collectionId, savedData = null) {
+    const sandData = savedData
+      ? savedData
+      : {
+          collection: this.activeCollection.collection,
+        };
     try {
-      const resp = await axios.put(api.collectionElement(collectionId), {
-        collection: this.activeCollection.collection,
-      });
+      const resp = await axios.put(
+        api.collectionElement(collectionId),
+        sandData
+      );
       return resp;
     } catch (error) {
       console.error(error);
