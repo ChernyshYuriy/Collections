@@ -51,7 +51,6 @@ export default {
     const index = this.collections.findIndex(
       (collection) => collection.objectId === id
     );
-    console.log(index, `index`);
     this.collections[index].name = newName;
   },
 };

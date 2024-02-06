@@ -52,8 +52,7 @@ function saveCollectionChanges() {
     name: name.value,
   });
 }
-function editSubmitAction(params) {
-  console.log(props.isControlPanel, `controle`);
+function editSubmitAction() {
   props.isControlPanel ? saveCollectionChanges() : saveItemChanges();
 }
 const isShowConfirmModal = ref(false);
