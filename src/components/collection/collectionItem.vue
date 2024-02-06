@@ -1,6 +1,3 @@
-<script setup></script>
-<script setup></script>
-<script setup></script>
 <script setup>
 import { defineProps, ref } from "vue";
 import btnUI from "../ui/btnUI.vue";
