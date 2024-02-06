@@ -47,4 +47,11 @@ export default {
   CHANGE_ACTIVE_COLLECTION(newCollectionId) {
     this.activeCollectionId = newCollectionId;
   },
+  CHANGE_COLLECTION_NAME(id, newName) {
+    const index = this.collections.findIndex(
+      (collection) => collection.objectId === id
+    );
+    console.log(index, `index`);
+    this.collections[index].name = newName;
+  },
 };

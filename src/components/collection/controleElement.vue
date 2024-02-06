@@ -9,7 +9,7 @@ const collectionsStore = useCollectionStore();
       :item="item"
       v-for="item in collectionsStore.collectionsList"
       :key="item.objectId"
-      :isFullCollection="true"
+      :isControlPanel="true"
     />
   </div>
 </template>
