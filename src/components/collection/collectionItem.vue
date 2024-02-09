@@ -131,13 +131,15 @@ const showDropContent = ref(false);
   }
   &__rating {
     text-align: center;
-    height: 100%;
+    height: fit-content;
   }
   button img {
     width: 12px;
   }
 
   & .title {
+    width: 100%;
+    overflow: hidden;
     &::first-letter {
       text-transform: capitalize;
     }
