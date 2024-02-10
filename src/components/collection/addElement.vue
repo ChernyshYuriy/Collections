@@ -17,8 +17,10 @@ const validationMessage = {
 const store = useCollectionStore();
 // const searchStore = useSearchStore();
 const name = ref("");
-const validation = ref("");
+const link = ref("");
 const rating = ref(0);
+
+const validation = ref("");
 const isAlreadyCreated = () =>
   store.activeCollectionGroup.some((item) => item.name === name.value.trim());
 const addElement = () => {
@@ -28,7 +30,11 @@ const addElement = () => {
     return;
   }
   validation.value = "";
-  const newItem = createNewCollectionItem(name.value.trim(), rating.value);
+  const newItem = createNewCollectionItem(
+    name.value.trim(),
+    rating.value,
+    link.value
+  );
   store.ADD_ELEMENT_TO_COLLECTION(store.activeCollectionIndex, newItem);
   store.saveChangesToCollection(store.activeCollectionId);
   name.value = "";
@@ -58,6 +64,7 @@ function searchSimilarItems(e) {
       :validation="validation"
       @input="debounce(() => searchSimilarItems($event))"
     />
+
     <div class="form__similar similar" v-if="similarItems.length">
       <span>Similar in collection</span>
       <span class="similar__item" v-for="item in similarItems" :key="item">{{
@@ -65,6 +72,12 @@ function searchSimilarItems(e) {
       }}</span>
     </div>
     <RatingUI class="form__rating" v-model="rating" />
+    <inputUI
+      v-model="link"
+      id="item"
+      :title="`${store.activeCollectionTitle} add link (optional)`"
+      :validation="validation"
+    />
     <btnUI type="submit" color="green"
       >Add {{ store.activeCollectionTitle }}</btnUI
     >

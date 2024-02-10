@@ -1,5 +1,8 @@
 <script setup>
 import { defineProps, defineEmits, ref } from "vue";
+import { copyValue } from "@/utils/global";
+import btnUI from "./btnUI.vue";
+
 defineProps({
   modelValue: String,
   inputType: {
@@ -42,6 +45,12 @@ defineProps({
       return false;
     },
   },
+  showCopyBtn: {
+    type: Boolean,
+    default() {
+      return false;
+    },
+  },
 });
 defineEmits(["update:modelValue"]);
 const showPassword = ref(false);
@@ -55,7 +64,18 @@ function changeShopPassword() {
 
 <template>
   <div class="input">
-    <label class="input__label" :for="id">{{ title }}</label>
+    <label class="input__label" :for="id"
+      >{{ title }}
+      <btnUI
+        size="tiny"
+        color="black"
+        v-if="showCopyBtn"
+        @click.prevent="copyValue(modelValue)"
+      >
+        copy
+      </btnUI>
+    </label>
+
     <template v-if="showHidePassword && inputType === 'password'">
       <span class="input-filed">
         <input
@@ -66,6 +86,7 @@ function changeShopPassword() {
           :placeholder="placeholder"
           @input="$emit('update:modelValue', $event.target.value)"
         />
+
         <span
           class="input-filed__password-visibility"
           @click="changeShopPassword()"
@@ -112,6 +133,9 @@ function changeShopPassword() {
     width: 260px;
     margin-top: 12px;
     margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   &__element {
     @include input;

@@ -22,6 +22,7 @@ const props = defineProps({
 });
 const rating = ref(props.item.rating || 0);
 const name = ref(props.item.name);
+const link = ref(props.item.link || "");
 function deleteItem() {
   collectionsStore.REMOVE_ELEMENT_FROM_COLLECTION(
     collectionsStore.activeCollectionIndex,
@@ -37,7 +38,12 @@ function showConfirmModal(status) {
   isShowConfirmModal.value = status;
 }
 function saveItemChanges() {
-  const newItem = createNewCollectionItem(name, rating.value, props.item.id);
+  const newItem = createNewCollectionItem(
+    name.value,
+    rating.value,
+    link.value,
+    props.item.id
+  );
   collectionsStore.CHANGE_COLLECTION_ELEMENT(
     collectionsStore.activeCollectionIndex,
     newItem
@@ -63,7 +69,15 @@ const showDropContent = ref(false);
   <dropElement class="drop-element" :is-open-status="showDropContent">
     <template #main>
       <div class="collection-item-main">
-        <div class="title">{{ props.item.name }}</div>
+        <component
+          :is="props.item.link ? 'a' : 'div'"
+          :href="props.item.link"
+          target="_blank"
+          :class="{ title: !props.item.link }"
+        >
+          {{ props.item.name }}
+        </component>
+
         <span class="collection-item-main__rating">
           {{ props.item.rating }}
         </span>
@@ -99,12 +113,21 @@ const showDropContent = ref(false);
     <template #content>
       <form @submit.prevent="editSubmitAction()" class="collection-edit-item">
         <div class="collection-edit-item__panel panel">
-          <InputUI v-model="name" id="item-name" title="Edit name" />
-          <RatingUI
-            v-if="!props.isControlPanel"
-            class="collection-edit-item__rating"
-            v-model="rating"
+          <InputUI
+            v-model="name"
+            id="item-name"
+            title="Edit name"
+            :showCopyBtn="true"
           />
+          <template v-if="!props.isControlPanel">
+            <RatingUI class="collection-edit-item__rating" v-model="rating" />
+            <InputUI
+              v-model="link"
+              id="item-link"
+              title="Edit link"
+              :showCopyBtn="true"
+            />
+          </template>
         </div>
         <btnUI class="collection-edit-item__btn" color="green" type="submit"
           >Save changes
@@ -140,6 +163,7 @@ const showDropContent = ref(false);
   & .title {
     width: 100%;
     overflow: hidden;
+    max-height: 54px;
     &::first-letter {
       text-transform: capitalize;
     }

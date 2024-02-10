@@ -7,3 +7,6 @@ export function createDebounce(delay = 1) {
     }, delayMs || delay);
   };
 }
+export function copyValue(copiedValue) {
+  navigator.clipboard.writeText(copiedValue);
+}

@@ -7,6 +7,7 @@ const props = defineProps({
       return "";
     },
   },
+  // available colors green blue red black
   type: {
     type: String,
     default() {
@@ -19,6 +20,8 @@ const props = defineProps({
       return "button";
     },
   },
+  // available sizes small tiny
+
   loading: {
     type: Boolean,
     default() {
@@ -78,6 +81,11 @@ const classLoading = computed(() => (props.loading ? "btn--loading" : ""));
     height: 20px;
     padding: 0px 2px;
   }
+  &--tiny {
+    height: 16px;
+    padding: 1px 5px;
+    font-size: 12px;
+  }
   &--loading {
     padding-right: 40px;
   }
@@ -97,6 +105,11 @@ const classLoading = computed(() => (props.loading ? "btn--loading" : ""));
   &--red {
     background-color: $red;
     outline-color: $red;
+    color: $white;
+  }
+  &--black {
+    background-color: $black;
+    outline-color: $black;
     color: $white;
   }
 }

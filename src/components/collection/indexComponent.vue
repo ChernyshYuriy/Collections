@@ -27,6 +27,7 @@ const showAddElement = ref(false);
     />
     <div class="collection__items" v-if="store.activeCollectionGroup">
       <CollectionItem
+        :title="item.name"
         :item="item"
         v-for="item in store.activeCollectionGroup"
         :key="item.id"

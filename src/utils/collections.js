@@ -6,15 +6,21 @@ import localStorageKeys, {
 const generateId = () =>
   btoa(Math.random(0, new Date().getTime()).toString()).slice(0, -10);
 class Collection {
-  constructor(name, rating, id) {
+  constructor(name, rating, link, id) {
     this.name = name;
     this.id = id;
     this.rating = rating || 0;
+    this.link = link || "";
   }
 }
 
-export const createNewCollectionItem = (name, rating, id = generateId()) => {
-  return new Collection(name, rating, id);
+export const createNewCollectionItem = (
+  name,
+  rating,
+  link,
+  id = generateId()
+) => {
+  return new Collection(name, rating, link, id);
 };
 
 export function saveDeletedCollection(newDeletedCollection) {
