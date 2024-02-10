@@ -1,3 +1,4 @@
+builded app https://collection-system.netlify.app/
 # base vue 3 composition API project with login (reqiusts axios) and costume components IU
 ## Project setup
 ```
