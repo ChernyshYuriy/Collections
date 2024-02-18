@@ -8,18 +8,20 @@ const collectionStore = useCollectionStore();
 defineEmits(["showConfirmModal", "showQuickEdit"]);
 defineProps({
   id: String,
-  link: String,
+  link: { type: String, default: "" },
+  isControlPanel: { type: Boolean, default: false },
 });
 </script>
 <template>
   <div class="actions-group">
     <btnUI color="blue" @click="$emit('showQuickEdit')">Quick Edit</btnUI>
     <btnUI
+      v-if="!isControlPanel"
       color="blue"
       @click="redirectItemPage(collectionStore.activeCollectionTitle, id)"
       >View page</btnUI
     >
-    <a v-if="link" :href="link" target="_blank">
+    <a v-if="link && !isControlPanel" :href="link" target="_blank">
       <btnUI color="blue">Link</btnUI></a
     >
     <btnUI @click="$emit('showConfirmModal')"

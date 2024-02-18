@@ -82,44 +82,54 @@ const showDropContent = ref(false);
       </div>
     </template>
     <template #content>
-      <quickActions
-        :link="props.item.link || ''"
-        :id="props.item.id"
-        @showConfirmModal="showConfirmModal(true)"
-        @showQuickEdit="showQuickEdit = true"
-      />
-      <TextBlock v-if="props.item.description">
-        <template #header> Description </template>
-        <template #body>{{ props.item.description }} </template>
-      </TextBlock>
-      <!-- <TextBlock v-if="props.item.review?.text">
+      <template v-if="!props.isControlPanel">
+        <quickActions
+          :link="props.item.link"
+          :id="props.item.id"
+          @showConfirmModal="showConfirmModal(true)"
+          @showQuickEdit="showQuickEdit = true"
+        />
+        <TextBlock v-if="props.item.description">
+          <template #header> Description </template>
+          <template #body>{{ props.item.description }} </template>
+        </TextBlock>
+        <!-- <TextBlock v-if="props.item.review?.text">
         <template #header> Description </template>
         <template #body>{{ props.item.review.text }} </template>
       </TextBlock> -->
-      Review ratings 10/10 100/100 count pluses and minuses BtnUI
-      <div class="row row--center row--gap-20">
-        <btnUI
-          color="blue"
-          @click="
-            redirectItemPage(
-              collectionsStore.activeCollectionTitle,
-              props.item.id,
-              { edit: true }
-            )
-          "
-          >Full edit</btnUI
-        >
-        <btnUI
-          color="green"
-          @click="
-            redirectItemPage(
-              collectionsStore.activeCollectionTitle,
-              props.item.id
-            )
-          "
-          >{{ props.item.name }} page</btnUI
-        >
-      </div>
+        Review ratings 10/10 100/100 count pluses and minuses BtnUI
+        <div class="row row--center row--gap-20">
+          <btnUI
+            color="blue"
+            @click="
+              redirectItemPage(
+                collectionsStore.activeCollectionTitle,
+                props.item.id,
+                { edit: true }
+              )
+            "
+            >Full edit</btnUI
+          >
+          <btnUI
+            color="green"
+            @click="
+              redirectItemPage(
+                collectionsStore.activeCollectionTitle,
+                props.item.id
+              )
+            "
+            >{{ props.item.name }} page</btnUI
+          >
+        </div></template
+      >
+      <template v-else
+        ><quickActions
+          :id="props.item.id"
+          :isControlPanel="props.isControlPanel"
+          @showConfirmModal="showConfirmModal(true)"
+          @showQuickEdit="showQuickEdit = true"
+      /></template>
+
       <ConfirmModal
         v-if="isShowConfirmModal"
         :confirm-func="!props.isControlPanel ? deleteItem : deleteCollection"
