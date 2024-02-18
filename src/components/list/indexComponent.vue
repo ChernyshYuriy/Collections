@@ -4,8 +4,8 @@ import { useCollectionStore } from "@/store/modules/collections";
 // import { useSearchStore } from "@/store/modules/search";
 import { navControlId } from "@/static/nav";
 
-import addElement from "@/components/collection/addElement.vue";
-import CollectionItem from "@/components/collection/collectionItem.vue";
+import addElement from "@/components/list/addElement.vue";
+import CollectionItem from "@/components/list/item/indexItem.vue";
 import ControlElement from "./controleElement.vue";
 import dropElement from "../ui/dropElement.vue";
 import btnUI from "../ui/btnUI.vue";
@@ -44,8 +44,8 @@ const showAddElement = ref(false);
             color="green"
             @click="showAddElement = !showAddElement"
             >{{ showAddElement ? "Hide" : "Show" }} add element modal
-          </btnUI></template
-        >
+          </btnUI>
+        </template>
         <template #content> <addElement /> </template
       ></dropElement>
     </div>

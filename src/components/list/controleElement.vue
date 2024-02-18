@@ -1,6 +1,6 @@
 <script setup>
 import { useCollectionStore } from "@/store/modules/collections";
-import CollectionItem from "@/components/collection/collectionItem.vue";
+import CollectionItem from "@/components/list/item/indexItem.vue";
 const collectionsStore = useCollectionStore();
 </script>
 <template>

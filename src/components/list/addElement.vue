@@ -35,7 +35,7 @@ const addElement = () => {
     rating.value,
     link.value
   );
-  store.ADD_ELEMENT_TO_COLLECTION(store.activeCollectionIndex, newItem);
+  store.ADD_ELEMENT_TO_COLLECTION(newItem);
   store.saveChangesToCollection(store.activeCollectionId);
   name.value = "";
   rating.value = 0;

@@ -17,4 +17,12 @@ body {
 .row {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  &--center {
+    justify-content: center;
+    align-items: center;
+  }
+  &--gap-20 {
+    gap: 20px;
+  }
 }

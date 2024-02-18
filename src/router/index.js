@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "@/views/HomeView.vue";
+import Login from "../views/LoginView";
+import ItemPage from "../views/ItemView";
 
 const routes = [
   {
@@ -11,9 +13,13 @@ const routes = [
     path: "/login",
     name: "login",
 
-    component: function () {
-      return import("../components/login/indexComponent");
-    },
+    component: Login,
+  },
+  {
+    path: "/item/:collection/:id",
+    name: "item-page",
+    component: ItemPage,
+    props: true, // This allows the route params to be passed as props to the component
   },
 ];
 

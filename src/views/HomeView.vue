@@ -23,8 +23,8 @@ import { useLoginStore } from "@/store/modules/login";
 import { useCollectionStore } from "@/store/modules/collections";
 import { ref, computed, onMounted } from "vue";
 import BtnUI from "@/components/ui/btnUI.vue";
-import Collections from "@/components/collection/indexComponent.vue";
-import AddNewCollection from "@/components/collection/addNewCollection.vue";
+import Collections from "@/components/list/indexComponent.vue";
+import AddNewCollection from "@/components/list/addNewCollection.vue";
 
 const storeLogin = useLoginStore();
 const storeCollection = useCollectionStore();

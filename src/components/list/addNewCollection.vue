@@ -1,7 +1,7 @@
 <script setup>
 import BtnUI from "@/components/ui/btnUI.vue";
 import inputUI from "@/components/ui/inputUI.vue";
-import ModalUI from "@/components/ui/modalUI.vue";
+import ModalUI from "@/components/ui/modals/modalUI.vue";
 import { useCollectionStore } from "@/store/modules/collections";
 import { useLoginStore } from "@/store/modules/login";
 import { ref, defineEmits } from "vue";

@@ -1,7 +1,7 @@
 <script setup>
 import btnUIVue from "../btnUI.vue";
 import inputUI from "../inputUI.vue";
-import modalUI from "../modalUI.vue";
+import modalUI from "./modalUI.vue";
 import { defineProps, defineEmits } from "vue";
 import { ref, computed } from "vue";
 const props = defineProps({
