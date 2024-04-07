@@ -1,9 +1,11 @@
 <template>
-  <div>{{ collectionStore.activeCollectionItem.name }}</div>
+  <IndexItemCollection />
 </template>
 
 <script setup>
 // import collection from "@/api/classes/collection";
+
+import IndexItemCollection from "@/components/collection/indexItemCollection.vue";
 import { useCollectionStore } from "@/store/modules/collections";
 import { defineProps, onMounted } from "vue";
 const collectionStore = useCollectionStore();
