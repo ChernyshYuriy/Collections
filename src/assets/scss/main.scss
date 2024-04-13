@@ -6,6 +6,10 @@ $whiteTransparent: #ffffffce;
 $grayLight: #f3f3f3;
 $blue: rgb(14, 0, 216);
 $gray: #0000003b;
+@mixin table-grid {
+  display: grid;
+  grid-template-columns: 1fr 34px 60px 40px auto;
+}
 body {
   margin: 0px;
   padding: 0px;
@@ -13,6 +17,10 @@ body {
 .elem-center {
   display: block;
   margin: 0px auto;
+}
+.offsets{
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 .row {
   display: flex;

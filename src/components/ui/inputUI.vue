@@ -109,7 +109,7 @@ function changeShopPassword() {
       />
     </template>
 
-    <span class="input__validation">{{
+    <span v-if="validation" class="input__validation">{{
       showValidation ? validation : ""
     }}</span>
   </div>

@@ -6,6 +6,10 @@ defineProps({
   modelValue: {
     type: Number,
   },
+  title: {
+    type: String,
+    default: "",
+  },
 });
 const emit = defineEmits(["setRating", "update:modelValue"]);
 
@@ -16,26 +20,35 @@ function changeRating(newValue) {
 }
 </script>
 <template>
+  <div class="title" v-if="title">{{ title }}</div>
   <div class="rating">
-    <span
+    <button
+      type="button"
       class="rating__btn"
       @click="debounce(() => changeRating(modelValue + 1))"
-      >&#10133;</span
     >
+      &#10133;
+    </button>
     <input
       class="rating__input"
       type="number"
       :value="modelValue"
       @change="changeRating(Number($event.target.value))"
     />
-    <span
+    <button
+      type="button"
       class="rating__btn"
       @click="debounce(() => changeRating(modelValue - 1))"
-      >&#10134;</span
     >
+      &#10134;
+    </button>
   </div>
 </template>
 <style lang="scss" scoped>
+.title {
+  text-align: center;
+  margin: 5px 0px;
+}
 .rating {
   display: flex;
   justify-content: center;
@@ -48,6 +61,8 @@ function changeRating(newValue) {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: transparent;
+    border: none;
   }
   &__input {
     border-radius: 8px;

@@ -8,16 +8,22 @@ const props = defineProps({
   isControlPanel: Boolean,
   name: String,
   rating: Number,
+  ratingReview: Number,
+  isChecked: Boolean,
   link: String,
 });
 const name = ref(props.name);
 const rating = ref(props.rating || 0);
 const link = ref(props.link || "");
+const ratingReview = ref(props.ratingReview || "");
+const isChecked = ref(props.isChecked || false);
 const emit = defineEmits(["saveChanges"]);
 function submitAction() {
   const editedData = {
     name,
     rating,
+    ratingReview,
+    isChecked,
     link,
   };
   console.log(editedData, `editedData`);
@@ -37,9 +43,21 @@ function submitAction() {
       <template v-if="!isControlPanel">
         <RatingUI
           class="collection-edit-item__rating"
+          title="Rating interests"
           v-model="rating"
           @input="$emit('update:modelValue', $event.target.value)"
         />
+        <RatingUI
+          class="collection-edit-item__rating"
+          title="Rating review form 100"
+          v-model="ratingReview"
+          @input="$emit('update:modelValue', $event.target.value)"
+        />
+        <div class="row row--center offsets">
+          <label for="checkbox">Is checked</label>
+          <input type="checkbox" name="checkbox" v-model="isChecked" id="" />
+        </div>
+
         <InputUI
           v-model="link"
           id="item-link"
@@ -64,6 +82,7 @@ function submitAction() {
   padding: 8px;
   &__panel {
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     flex-wrap: wrap;
   }

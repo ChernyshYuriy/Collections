@@ -6,10 +6,12 @@ import localStorageKeys, {
 const generateId = () =>
   btoa(Math.random(0, new Date().getTime()).toString()).slice(0, -10);
 class Collection {
-  constructor(name, rating, link, id) {
+  constructor(name, rating, ratingReview, isChecked, link, id) {
     this.name = name;
     this.id = id;
     this.rating = rating || 0;
+    this.ratingReview = ratingReview || 0;
+    this.isChecked = isChecked || false;
     this.link = link || "";
   }
 }
@@ -17,10 +19,12 @@ class Collection {
 export const createNewCollectionItem = (
   name,
   rating,
+  ratingReview,
+  isChecked,
   link,
   id = generateId()
 ) => {
-  return new Collection(name, rating, link, id);
+  return new Collection(name, rating, ratingReview, isChecked, link, id);
 };
 
 export function saveDeletedCollection(newDeletedCollection) {

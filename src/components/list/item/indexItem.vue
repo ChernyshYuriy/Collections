@@ -33,8 +33,15 @@ function deleteCollection() {
 function showConfirmModal(status) {
   isShowConfirmModal.value = status;
 }
-function saveItemChanges({ name, rating, link }) {
-  const newItem = createNewCollectionItem(name, rating, link, props.item.id);
+function saveItemChanges({ name, rating, ratingReview, isChecked, link }) {
+  const newItem = createNewCollectionItem(
+    name,
+    rating,
+    ratingReview,
+    isChecked,
+    link,
+    props.item.id
+  );
   collectionsStore.CHANGE_COLLECTION_ELEMENT(newItem);
   collectionsStore.SORT_COLLECTION();
   collectionsStore.saveChangesToCollection(collectionsStore.activeCollectionId);
@@ -71,12 +78,16 @@ const showDropContent = ref(false);
         <span class="collection-item-main__rating">
           {{ props.item.rating }}
         </span>
+        <span class="collection-item-main__rating">
+          {{ props.item.ratingReview ? `${props.item.ratingReview}/100` : "" }}
+        </span>
+        <span>{{ props.item.isChecked }}</span>
         <span class="collection-item-main__actions">
           <btnUI
             size="small"
             color="blue"
             @click="showDropContent = !showDropContent"
-            >{{ showDropContent ? "hide" : "edit" }}</btnUI
+            >{{ showDropContent ? "hide" : "show" }}</btnUI
           >
         </span>
       </div>
@@ -97,7 +108,7 @@ const showDropContent = ref(false);
         <template #header> Description </template>
         <template #body>{{ props.item.review.text }} </template>
       </TextBlock> -->
-        Review ratings 10/10 100/100 count pluses and minuses BtnUI
+        <!-- Review ratings 10/10 100/100 count pluses and minuses BtnUI -->
         <div class="row row--center row--gap-20">
           <btnUI
             color="blue"
@@ -145,6 +156,8 @@ const showDropContent = ref(false);
             :isControlPanel="props.isControlPanel"
             :name="props.item.name"
             :rating="props.item.rating"
+            :rating-review="props.item.ratingReview"
+            :is-checked="props.item.isChecked"
             :link="props.item.rating"
             @saveChanges="editSubmitAction($event)"
           />
@@ -159,10 +172,9 @@ const showDropContent = ref(false);
 }
 
 .collection-item-main {
-  display: grid;
+  @include table-grid;
   justify-content: space-between;
   align-items: center;
-  grid-template-columns: 1fr 34px auto;
   gap: 5px;
   padding: 10px;
   &__actions {

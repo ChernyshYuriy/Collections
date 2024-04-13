@@ -19,6 +19,8 @@ const store = useCollectionStore();
 const name = ref("");
 const link = ref("");
 const rating = ref(0);
+const ratingReview = ref(0);
+const isChecked = ref(false);
 
 const validation = ref("");
 const isAlreadyCreated = () =>
@@ -33,6 +35,8 @@ const addElement = () => {
   const newItem = createNewCollectionItem(
     name.value.trim(),
     rating.value,
+    ratingReview.value,
+    isChecked.value,
     link.value
   );
   store.ADD_ELEMENT_TO_COLLECTION(newItem);
@@ -71,7 +75,16 @@ function searchSimilarItems(e) {
         item
       }}</span>
     </div>
-    <RatingUI class="form__rating" v-model="rating" />
+    <RatingUI class="form__rating" title="Rating interests" v-model="rating" />
+    <RatingUI
+      class="form__rating"
+      title="Rating review from 100"
+      v-model="ratingReview"
+    />
+    <div class="row row--center offsets">
+      <label for="checkbox">Is checked</label>
+      <input type="checkbox" name="checkbox" v-model="isChecked" id="" />
+    </div>
     <inputUI
       v-model="link"
       id="item"
